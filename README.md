@@ -1,4 +1,5 @@
 # Node.js-Mail-API
+Generic Node.js Mail API using NodeMailer inside Express Post Wrapper
 
  [![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://paypal.me/dig22)
  
