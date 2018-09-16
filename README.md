@@ -4,6 +4,14 @@
  
 ## Usage :
 ```
+  npm install
+```
+
+```
+ node index.js
+```
+
+```
   POST :
     MailName    : <From Name>
     Mailfrom    : <From email>
