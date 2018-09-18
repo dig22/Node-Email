@@ -8,7 +8,18 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 var cors = require('cors');
-app.use(cors());
+
+
+/* Dev Cross origin access */
+var corsOptions = {
+    origin: '*',
+    allowedHeaders: ['Content-Type', 'Authorization', 'Content-Length', 'X-Requested-With', 'Accept'],
+    methods: ['GET', 'PUT', 'POST', 'DELETE', 'OPTIONS'],
+    optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
+}
+
+
+app.use(cors(corsOptions));
 
 app.post('/send-mail', function (req, res) {
 
