@@ -7,19 +7,12 @@ var bodyParser = require('body-parser');
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-var cors = require('cors');
-
-
-/* Dev Cross origin access */
-var corsOptions = {
-    origin: '*',
-    allowedHeaders: ['Content-Type', 'Authorization', 'Content-Length', 'X-Requested-With', 'Accept'],
-    methods: ['GET', 'PUT', 'POST', 'DELETE', 'OPTIONS'],
-    optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
-}
-
-
-app.use(cors(corsOptions));
+app.options('/login', function (req, res) {
+    res.setHeader("Access-Control-Allow-Origin", "*");
+    res.setHeader('Access-Control-Allow-Methods', '*');
+    res.setHeader("Access-Control-Allow-Headers", "*");
+    res.end();
+});
 
 app.post('/send-mail', function (req, res) {
 
@@ -42,15 +35,15 @@ app.post('/send-mail', function (req, res) {
             //pass: '', // stmp account (hardcoded)
             user: Mailfrom, // stmp account
             pass: process.env.NoReplyMailPass //  stmp account password (if you have generic password saved as env)
-            
+
         }
     });
 
 
     let mailOptions = {
-        from: '"' +MailName + '"' + '<'+ Mailfrom +'>', // sender address
-        to:  Mailto, // list of receivers
-        subject:subject, // Subject line
+        from: '"' + MailName + '"' + '<' + Mailfrom + '>', // sender address
+        to: Mailto, // list of receivers
+        subject: subject, // Subject line
         // text: text, // plain text body
         html: html // html body
     };
@@ -65,12 +58,12 @@ app.post('/send-mail', function (req, res) {
         return res.json('Success');
 
     });
-    
+
 });
 
 /* Set port for express server*/
 app.listen(8082, function () {
-    console.log('Listening on port lol 8082...'); 
+    console.log('Listening on port lol 8082...');
 })
 
 //Test Jenkins 2
