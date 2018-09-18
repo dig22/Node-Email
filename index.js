@@ -7,9 +7,13 @@ var bodyParser = require('body-parser');
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
+var cors = require('cors')
+var app = express()
+app.use(cors())
 
 app.post('/send-mail', function (req, res) {
 
+    console.log(req.body);
     let MailName = req.body.MailName || '';
     let Mailfrom = req.body.Mailfrom || '';
 
@@ -44,8 +48,10 @@ app.post('/send-mail', function (req, res) {
 
     transporter.sendMail(mailOptions, (error, info) => {
         if (error) {
+            console.log(error);
             return res.json('Failed');
         }
+        console.log('Success');
         return res.json('Success');
 
     });
