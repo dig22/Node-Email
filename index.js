@@ -4,6 +4,22 @@ var express = require('express');
 var cors = require('cors');
 
 var app = express();
+
+var whitelist = ['http://127.0.0.1:8080', 'http://example2.com']
+var corsOptions = {
+  origin: function (origin, callback) {
+    if (whitelist.indexOf(origin) !== -1) {
+      callback(null, true)
+    } else {
+      callback(new Error('Not allowed by CORS'))
+    }
+  }
+}
+
+// Then pass them to cors:
+app.use(cors(corsOptions));
+
+
 var bodyParser = require('body-parser');
 
 app.use(bodyParser.json());
@@ -56,7 +72,7 @@ app.post('/send-mail', function (req, res) {
     
 });
 
-app.use(cors(corsOptions));
+
 
 /* Set port for express server*/
 app.listen(8082, function () {
