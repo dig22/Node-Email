@@ -1,18 +1,13 @@
 'use strict';
 const nodemailer = require('nodemailer');
 var express = require('express');
+var cors = require('cors');
+
 var app = express();
 var bodyParser = require('body-parser');
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-
-app.options('/login', function (req, res) {
-    res.setHeader("Access-Control-Allow-Origin", "*");
-    res.setHeader('Access-Control-Allow-Methods', '*');
-    res.setHeader("Access-Control-Allow-Headers", "*");
-    res.end();
-});
 
 app.post('/send-mail', function (req, res) {
 
@@ -35,15 +30,15 @@ app.post('/send-mail', function (req, res) {
             //pass: '', // stmp account (hardcoded)
             user: Mailfrom, // stmp account
             pass: process.env.NoReplyMailPass //  stmp account password (if you have generic password saved as env)
-
+            
         }
     });
 
 
     let mailOptions = {
-        from: '"' + MailName + '"' + '<' + Mailfrom + '>', // sender address
-        to: Mailto, // list of receivers
-        subject: subject, // Subject line
+        from: '"' +MailName + '"' + '<'+ Mailfrom +'>', // sender address
+        to:  Mailto, // list of receivers
+        subject:subject, // Subject line
         // text: text, // plain text body
         html: html // html body
     };
@@ -58,12 +53,14 @@ app.post('/send-mail', function (req, res) {
         return res.json('Success');
 
     });
-
+    
 });
+
+app.use(cors(corsOptions));
 
 /* Set port for express server*/
 app.listen(8082, function () {
-    console.log('Listening on port lol 8082...');
+    console.log('Listening on port lol 8082...'); 
 })
 
 //Test Jenkins 2
